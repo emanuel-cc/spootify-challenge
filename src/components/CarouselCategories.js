@@ -13,6 +13,8 @@ import '../components/styles/Card.css';
 // Este componente renderiza las categorías
 class CarouselCategories extends React.Component{
     state = {
+        loading: true,
+        error: null,
         data:{
             categories: {
                 items: []
@@ -22,15 +24,23 @@ class CarouselCategories extends React.Component{
 
     componentDidMount(){
         spooti.getCategories().then((resp)=>{
-            console.log(resp);
-            // this.listaReleased.push(resp['data']['albums']['items']);
-            let data = resp['data'];
+            try{
+                let data = resp['data'];
             
-            this.setState({
-                data
-            });
-            console.log("categories", this.state);
-            // this.props.navigation.navigate(`/category/${this.state.data.categories.items['id']}`);
+                this.setState({
+                    loading: false,
+                    data
+                });
+                console.log("categories", this.state);
+                // this.props.navigation.navigate(`/category/${this.state.data.categories.items['id']}`);
+            }catch(error){
+                this.setState({
+                    loading: false,
+                    error
+                });
+            }
+            console.log(resp);
+            
         });
     }
 
@@ -42,26 +52,40 @@ class CarouselCategories extends React.Component{
             { width: 768, itemsToShow: 3, showArrows: false },
             { width: 1200, itemsToShow: 3, showArrows: false}
           ];
-        return (
-            
-            <Carousel breakPoints={breakPoints}>
-                {
-                    this.state.data.categories.items.map(category => {
-                       return ( 
-                       <div key={category.id} className="col">
-                           <Link to={`/category/${category.id}`}>
-                            <div className="card puntero">
-                                <img src={category.icons[0]['url']} className="card-img-top" alt="" />
-                                <div className="card-body">
-                                    <h5 className="card-title">{category.name}</h5>
+          if(this.state.loading){
+              return (
+                  <div>
+                      <p>Por Favor espere...</p>
+                  </div>
+              );
+          }else if(this.state.error){
+              return (
+                <div>
+                    <p>{this.state.error.messages}</p>
+                </div>
+              );
+          }else{
+            return (
+                
+                <Carousel breakPoints={breakPoints}>
+                    {
+                        this.state.data.categories.items.map(category => {
+                            return ( 
+                            <div key={category.id} className="col">
+                                <Link to={`/category/${category.id}`}>
+                                <div className="card puntero">
+                                    <img src={category.icons[0]['url']} className="card-img-top" alt="" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{category.name}</h5>
+                                    </div>
                                 </div>
-                            </div>
-                           </Link>
-                        </div>);
-                    })
-                }
-            </Carousel>
-        );
+                                </Link>
+                            </div>);
+                        })
+                    }
+                </Carousel>
+            );
+          }
     }
 }
 export default CarouselCategories;

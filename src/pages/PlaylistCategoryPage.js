@@ -1,5 +1,4 @@
 import React from 'react';
-
 // Servicio de peticiones http
 import spooti from '../utils/services';
 
@@ -12,6 +11,7 @@ class PlaylistCategoryPage extends React.Component{
             }
         }
     };
+    
     componentDidMount(){
         spooti.getPlaylistCategory(this.props.match.params.id).then((resp)=>{
             console.log("listCategory:",resp);
@@ -23,6 +23,7 @@ class PlaylistCategoryPage extends React.Component{
         });
     }
     render(){
+
         const regresar =()=>{
             window.history.back();
         }
