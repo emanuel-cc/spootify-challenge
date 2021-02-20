@@ -71,7 +71,6 @@ class HomePage extends React.Component{
                     <div className="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <div className="container">
                             <div className="row mt-3">
-                                {/* <div className="col-4"></div> */}
                                 <div className="col-xs-6 col-sm-6 col-md-6">
                                     <div className="puntero" onClick={colorDark}>
                                         <div className="row">
@@ -110,15 +109,6 @@ class HomePage extends React.Component{
 
                             </div>
                             <div className="col-sm-10 col-md-12">
-                                {/* <nav className=" text-center navbar navbar-expand-lg navbar-light bg-light">
-                                    <div className="container-fluid">
-
-                                        <button type="button" id="sidebarCollapse" className="btn btn-info">
-                                            <i className="fas fa-align-left"></i>
-                                            <span>Toggle Sidebar</span>
-                                        </button>
-                                    </div>
-                                </nav> */}
                                 <div className="text-left ml-3">
                                     <h5>Released this week</h5>
                                     <CarouselReleased />
